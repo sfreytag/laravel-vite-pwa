@@ -1,7 +1,7 @@
-import laravel from "laravel-vite-plugin"
-import { defineConfig } from "vite"
-import { VitePWA } from "vite-plugin-pwa"
-import vue from "@vitejs/plugin-vue"
+import laravel from 'laravel-vite-plugin'
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import vue from '@vitejs/plugin-vue'
 
 export default () => {
     // Define the icons in the Laravel public folder that:
@@ -11,26 +11,26 @@ export default () => {
     // This is the data structure returned by @vite-pwa/assets-generator
     const manifestIcons = [
         {
-            src: "/pwa-64x64.png",
-            sizes: "64x64",
-            type: "image/png"
+            src: '/pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png'
         },
         {
-            src: "/pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png"
+            src: '/pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
         },
         {
-            src: "/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any"
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
         },
         {
-            src: "/maskable-icon-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable"
+            src: '/maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
         }
     ]
 
@@ -39,7 +39,9 @@ export default () => {
     // 2. we still want the service worker to pre-cache for offline use
     // The src is a web URL relative the public dir.
     const publicIcons = [
-        { src: "/favicon.ico" }, { src: "/favicon.svg" }, { src: "/apple-touch-icon-180x180.png" }
+        { src: '/favicon.ico' },
+        { src: '/favicon.svg' },
+        { src: '/apple-touch-icon-180x180.png' }
     ]
 
     // Define any additional images in the Laravel public folder that are not
@@ -54,23 +56,23 @@ export default () => {
             vue(),
             laravel({
                 input: ['resources/css/app.css', 'resources/js/app.ts'],
-                refresh: true,
+                refresh: true
             }),
             VitePWA({
                 // Make the PWA plugin build to the same place as laravel/vite-plugin
-                buildBase: "/build/",
+                buildBase: '/build/',
 
                 // Define the scope and the base so that the PWA can run from the
                 // root of the domain, even though the files live in /build.
                 // This requires the service worker to be served with
                 // a header `Service-Worker-Allowed: /` to authorise it.
                 // @see server.php
-                scope: "/",
-                base: "/",
+                scope: '/',
+                base: '/',
 
                 // Use 'prompt' for new versions of the PWA. 'autoUpdate' is
                 // simpler but may as well dmeo how this works.
-                registerType: "prompt",
+                registerType: 'prompt',
 
                 // Do not use the PWA with dev builds.
                 devOptions: {
@@ -91,12 +93,12 @@ export default () => {
                 workbox: {
                     // Add all the assets built by Vite into the public/build/assets
                     // folder to the SW cache.
-                    globPatterns: ["**/*.{js,css,html,ico,jpg,png,svg,woff,woff2,ttf,eot}"],
+                    globPatterns: ['**/*.{js,css,html,ico,jpg,png,svg,woff,woff2,ttf,eot}'],
 
                     // Define the root URL as the entrypoint for the offline app.
                     // vue-router can then takes over and shows the correct page
                     // if you are using it.
-                    navigateFallback: "/",
+                    navigateFallback: '/',
 
                     // Stops various paths being intercepted by the service worker
                     // if they're not available offline. Telescope is a good
@@ -109,7 +111,7 @@ export default () => {
                         // Cache the root URL to get hold of the PWA HTML entrypoint
                         // defined in welcome.blade.php. Ref:
                         // https://github.com/vite-pwa/vite-plugin-pwa/issues/431#issuecomment-1703151065
-                        { url: "/", revision: `${Date.now()}` },
+                        { url: '/', revision: `${Date.now()}` },
 
                         // Cache the icons defined above for the manifest
                         ...manifestIcons.map((i) => {
@@ -135,25 +137,21 @@ export default () => {
                 // Manifest settings - these will appear in the generated manifest.webmanifest
                 manifest: {
                     // Metadata
-                    name: "Laravel Vite PWA",
-                    short_name: "laravel-vite-pwa",
-                    description: "A demo of Laravel with vite-plugin-pwa",
-                    theme_color: "#DE9918",
-                    background_color: "#DE9918",
-                    orientation: "portrait",
-                    display: "standalone",
-                    scope: "/",
-                    start_url: "/",
-                    id: "/",
+                    name: 'Laravel Vite PWA',
+                    short_name: 'laravel-vite-pwa',
+                    description: 'A demo of Laravel with vite-plugin-pwa',
+                    theme_color: '#DE9918',
+                    background_color: '#DE9918',
+                    orientation: 'portrait',
+                    display: 'standalone',
+                    scope: '/',
+                    start_url: '/',
+                    id: '/',
 
                     // These icons are used when installing the PWA onto a home screen
                     icons: [...manifestIcons]
                 }
-            }),
+            })
         ]
     })
 }
-
-
-
-

@@ -1,3 +1,1 @@
-<template>
-    Vue3 App
-</template>
+<template>Vue3 App</template>

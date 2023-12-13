@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "pwa-icons": "npx pwa-assets-generator --preset minimal public/favicon.svg"
+        "pwa-icons": "npx pwa-assets-generator --preset minimal public/favicon.svg",
+        "lint-fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
     },
     "devDependencies": {
         "@rushstack/eslint-patch": "^1.6.0",

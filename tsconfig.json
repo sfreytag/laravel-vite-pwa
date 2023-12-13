@@ -4,5 +4,10 @@
         "resources/js/**/*.ts",
         "resources/js/**/*.d.ts",
         "resources/js/**/*.vue",
-    ]
+    ],
+    "compilerOptions": {
+        "types": [
+            "vite-plugin-pwa/client"
+        ],
+    }
 }

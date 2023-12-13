@@ -4,7 +4,7 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-// This repo is not using Vue and global use does not fit well with TS.
+// This repo is not using axios and global use does not fit well with TS.
 // Therefore commented out.
 // If you need axios, either add a global.d.ts or import it where required.
 

@@ -83,11 +83,11 @@ export default () => {
                 // icons that are not in the manifest. But laravel/vite-plugin
                 // does not use a public dir in the build - it relies on
                 // Laravel's. If we add this as a publicDir to vite's config
-                // then vite-plugin-pwa find everything in public (eg if you are
-                // using telescope then all its assets get cached). It then add
-                // it to the service worker with the `/build` prefix. So it
-                // doesn't work. I found it easiest to leave this empty and use
-                // `additionalManifestEntries` below.
+                // then vite-plugin-pwa finds everything in public (eg if you are
+                // using telescope then all its assets get cached). It then adds
+                // these assets to the service worker with the `/build` prefix,
+                // which doesn't work. I found it easiest to leave this empty
+                // and use `additionalManifestEntries` below.
                 includeAssets: [],
 
                 workbox: {

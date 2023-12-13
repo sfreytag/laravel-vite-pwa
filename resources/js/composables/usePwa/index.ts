@@ -1,41 +1,8 @@
 import { registerSW } from 'virtual:pwa-register'
-import { ref } from 'vue'
-
-declare global {
-    interface WindowEventMap {
-        beforeinstallprompt: BeforeInstallPromptEvent
-    }
-}
-
-// Types taken from https://stackoverflow.com/a/67171375/3861550
-interface BeforeInstallPromptEvent extends Event {
-    readonly platforms: string[]
-    readonly userChoice: Promise<{
-        outcome: 'accepted' | 'dismissed'
-        platform: string
-    }>
-    prompt(): Promise<void>
-}
+import { installEvent, onlineAndConnected, showRefresh, updateSW } from './state'
+import type { BeforeInstallPromptEvent } from './types'
 
 export function usePwa() {
-    // The PWA install event, which is captured and stored here so that we can
-    // control the install process.
-    const installEvent = ref<BeforeInstallPromptEvent | undefined>(undefined)
-
-    // If the service worker detects a new version of the app exists, this flag
-    // is set to true and we can use it to prompt the user to update the app.
-    const showRefresh = ref(false)
-
-    // The function to update the app.
-    const updateSW = ref<(reloadPage?: boolean | undefined) => Promise<void>>(() => {
-        return Promise.reject()
-    })
-
-    // A browser can be online (eg connected to WiFi) but not able to use the
-    // web (eg WiFi has dead gateway). We use this state to track if the user
-    // is both online AND connected.
-    const onlineAndConnected = ref(true)
-
     // An event handler for when the user goes offline.
     function onOffline() {
         onlineAndConnected.value = false
@@ -83,16 +50,12 @@ export function usePwa() {
 
         // Online/offline - add event handlers to track when the user goes on and
         // offline.
-        window.addEventListener('offline', (e) => {
-            onOffline()
-        })
-        window.addEventListener('online', (e) => {
-            onOnline()
-        })
+        window.addEventListener('offline', onOffline)
+        window.addEventListener('online', onOnline)
 
         // Work out if the user is both online AND cannected
         getOnlineAndConnected()
     }
 
-    return { createPwa, installEvent, showRefresh }
+    return { createPwa, updateSW, installEvent, showRefresh, onlineAndConnected }
 }

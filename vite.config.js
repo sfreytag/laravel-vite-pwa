@@ -68,8 +68,9 @@ export default () => {
                 scope: "/",
                 base: "/",
 
-                // Use autoUpdates for new versions of the PWA.
-                registerType: "autoUpdate",
+                // Use 'prompt' for new versions of the PWA. 'autoUpdate' is
+                // simpler but may as well dmeo how this works.
+                registerType: "prompt",
 
                 // Do not use the PWA with dev builds.
                 devOptions: {

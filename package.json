@@ -13,5 +13,8 @@
         "laravel-vite-plugin": "^0.8.0",
         "vite": "^4.0.0",
         "vite-plugin-pwa": "^0.17.4"
+    },
+    "dependencies": {
+        "vue": "^3.3.11"
     }
 }

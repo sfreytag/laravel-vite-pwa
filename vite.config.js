@@ -1,6 +1,7 @@
 import laravel from "laravel-vite-plugin"
 import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
+import vue from "@vitejs/plugin-vue"
 
 export default () => {
     // Define the icons in the Laravel public folder that:
@@ -50,6 +51,7 @@ export default () => {
 
     return defineConfig({
         plugins: [
+            vue(),
             laravel({
                 input: ['resources/css/app.css', 'resources/js/app.js'],
                 refresh: true,

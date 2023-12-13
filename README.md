@@ -10,7 +10,7 @@ It is made complex by Laravel being a mix of backend and frontend concepts. For 
 
 This approach was derived from the advice in [this issue](https://github.com/vite-pwa/vite-plugin-pwa/issues/431). Thoughts, feedback or improvements are welcome - there are probably other ways to solve the same problems!
 
-## Install
+## Install
 
 Usual Laravel steps, assuming you have PHP, NPM and Composer:
 

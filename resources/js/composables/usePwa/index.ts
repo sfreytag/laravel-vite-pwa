@@ -28,7 +28,7 @@ export function usePwa() {
     function createPwa() {
         // PWA setup - capture the install event and put it in the store (when available)
         // for the UI to use it later to ask the user to install the app. Does not work
-        // on every browser.
+        // on every browser - eg won;t work on Safari for Mac or iOS.
         window.addEventListener('beforeinstallprompt', (event: BeforeInstallPromptEvent) => {
             installEvent.value = event
         })

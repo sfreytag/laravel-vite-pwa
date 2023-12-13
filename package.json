@@ -8,8 +8,10 @@
     },
     "devDependencies": {
         "@vite-pwa/assets-generator": "^0.2.1",
+        "@vitejs/plugin-vue": "^4.5.2",
         "axios": "^1.6.1",
         "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
+        "vite": "^4.0.0",
+        "vite-plugin-pwa": "^0.17.4"
     }
 }

@@ -4,10 +4,13 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-window.axios = axios;
+// This repo is not using Vue and global use does not fit well with TS.
+// Therefore commented out.
+// If you need axios, either add a global.d.ts or import it where required.
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// import axios from 'axios';
+// window.axios = axios;
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

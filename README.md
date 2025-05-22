@@ -1,42 +1,57 @@
 # laravel-vite-pwa
 
-This repository demonstrates building a PWA for Laravel, Vite and Vue by configuring the [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa).
+## Introduction
 
-This process is made complex by Laravel being a mix of backend and frontend concepts. For example,
+This repository demonstrates building a PWA for Laravel, Vite, Vue and TypeScript by configuring the [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa).
 
-- Laravel has its own public dir
-- So vite then builds to public/build/assets which is different to the usual frontend layout
-- there is not an immediately apparent static HTML entrypoint for the PWA
-- Laravel will put other things (like Telescope) in the public dir that you do not want offline
+Using vite-plugin-pwa in a Laravel project is made complex by Laravel being a mix of backend and frontend concepts. For example,
 
-This repo builds on all the advice in [this issue](https://github.com/vite-pwa/vite-plugin-pwa/issues/431). Thoughts, feedback or improvements are welcome - there are probably other ways to solve the same problems!
+- Laravel has its own public dir inside the webserver's webroot. This means Vite builds to `/path/to/webroot/public/build/assets`. This different to the usual frontend layout, where `/build/assets` would be in the webroot.
+- There isn't a default static HTML entrypoint for the PWA. Laravel builds this server-side. The resulting HTML has a `<div id="app"></div>` into which the Vue app is instantiated.
+- Laravel will put other things (like [Telescope](https://laravel.com/docs/12.x/telescope)) in the public dir that you do not want offline.
+- Laravel has its own [plugin for Vite](https://github.com/laravel/vite-plugin) for builds, which adds an extra layer of configuration that vite-pwa does not normally encounter
+
+To make it work, you need to configure vite-plugin-pwa to work around these issues:
+
+- configure buildBase and outDir in vite.config.ts to make vite-pwa build to the same place as laravel/vite-plugin
+- create a Blade file to act as an HTML entrypoint and add config for this to vite.config.ts
+- Add a Service-Worker-Allowed header to your web server to work around the restrictions imposed by the build directory being in a subdir of the webroot
+- Configuring caching in vite.config.ts to work around other assets being in the public dir that you do not want to be offline
+
+## History
+
+There's a detailed GitHub issue exploring this problem here:
+
+https://github.com/vite-pwa/vite-plugin-pwa/issues/431
+
+The accumulated knowledge within it lead to this Laravel, Vite, Vue3 and TypeScript app working as a PWA with offline support and app install prompts. The issue was asking for a demonstration repository so I created this repo to share it. Thoughts, feedback or improvements are welcome.
 
 # What's Here?
 
 This repo demonstrates a working PWA with install prompts and offline support within Laravel using Vue3, Vite and Typescript. The useful things are:
 
-- A vite.config.ts with settings for `VitePWA` that work with Laravel's directory layout
-- A Blade template that works as the entrypoint for the PWA
-- A generator for the PWA icons
-- A `server.php` file that supplies the Service-Worker-Allowed header for `php artisan serve` for local development
-- A composable `usePwa` that demonstrates how to access the `vite-plugin-pwa` functionality within Vue3 and TypeScript (eg install and update hooks, online/offline status)
-- A `PwaStatus` component that shows how it all works
-- TypeScript types for the install event
+- A [vite.config.ts](https://github.com/sfreytag/vite-pwa-docs/blob/main/vite.config.ts) with settings for VitePWA that work with Laravel's directory layout
+- A [Blade template](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/views/welcome.blade.php) that works as the entrypoint for the PWA
+- A [generator for the PWA icons](https://github.com/sfreytag/laravel-vite-pwa/blob/main/package.json#L7)
+- A [server.php](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php) file that supplies the sw.js and the Service-Worker-Allowed header for `php artisan serve` for local development (see [lines 18:23](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php#L18-L23))
+- A composable [usePwa](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/index.ts) that demonstrates how to access the vite-plugin-pwa functionality within Vue3 and TypeScript (eg install and update hooks, online/offline status)
+- A [PwaStatus component](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/components/PwaStatus.vue) that shows how it all works
+- TypeScript [types for the install event](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/types.ts)
 
 # Setup
 
 This repo has been built on a vanilla install of Laravel 10 using composer from `composer create-project laravel/laravel`.
 
-To see the changes I then made to set up the PWA,
+To add the PWA to your own Laravel project you can review the changes required to set up the PWA:
 
 1. Work through the commit history, which builds it up step-by-step
 2. Or view the entire diff of the HEAD against the vanilla Laravel install: https://github.com/sfreytag/laravel-vite-pwa/compare/a59497..HEAD
 
-Or just fork the repo and start from there!
+Or just fork the repo and start from there.
 
 ## Build
 
-To build this repo, follow the usual Laravel steps. Assuming you have PHP, NPM and Composer:
+To build the repo, follow the usual Laravel steps. Nothing extra is required for vite-pwa. Assuming you have PHP, NPM and Composer:
 
 ```
 git clone git@github.com:sfreytag/laravel-vite-pwa.git
@@ -50,13 +65,13 @@ npm run build
 
 ## Run 
 
-Before you run it, bear in mind that the PWA installs a service worker and fills a cache. This can conflict with other service workers and caches from your other localhost projects. So I recommend using a port unique to each PWA project, eg to use 8082 for this one:
+Before you run it, bear in mind that the PWA installs a service worker and fills a cache. This can conflict with other service workers and caches from your other localhost projects. So it is recommended to use a port unique to each PWA project. To use eg 8082 for Laravel:
 
 ```
 php artisan serve --port=8082
 ```
 
-The app should now be running on http://localhost:8082 (or whichever port you picked). It should immediately work as a PWA. If you check the dev tools, the service worker should be running. If your browser offers it there will be an intall prompt in the address bar. It should then be installable. And if you use dev tools to take either the network or service worker offline, it should continue working if you reload the page.
+The app should now be running on http://localhost:8082. It should immediately work as a PWA. If you check the dev tools, the service worker should be running. If your browser supports it there will be an intall prompt in the address bar. It should then be installable. And if you use dev tools to take either the network or service worker offline, it should continue working if you reload the page.
 
 ## Working on the PWA
 
@@ -81,6 +96,8 @@ This generates a set of icons defined by the minimal preset described [here](htt
 They are automatically packaged in the public folder so they are web readable. They are also included in this repo so this process only needs repeating if you change the the canonical favicon.svg icon.
 
 ## Screenshot
+
+This screenshot demonstrates the useful features of vite-pwa within Laravel:
 
 ![image](https://github.com/sfreytag/laravel-vite-pwa/assets/1155275/f98383dd-93e8-4d6d-abb0-06a6ddd55022)
 

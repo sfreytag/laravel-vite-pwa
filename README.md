@@ -4,14 +4,14 @@
 
 This repository demonstrates building a PWA for Laravel, Vite, Vue and TypeScript by configuring the [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa).
 
-Using vite-plugin-pwa in a Laravel project is made complex by Laravel being a mix of backend and frontend concepts. For example,
+Using `vite-plugin-pwa` in a Laravel project is made complex by Laravel being a mix of backend and frontend concepts. For example,
 
 - Laravel has its own public dir inside the webserver's webroot. This means Vite builds to `/path/to/webroot/public/build/assets`. This different to the usual frontend layout, where `/build/assets` would be in the webroot.
 - There isn't a default static HTML entrypoint for the PWA. Laravel builds this server-side. The resulting HTML has a `<div id="app"></div>` into which the Vue app is instantiated.
 - Laravel will put other things (like [Telescope](https://laravel.com/docs/12.x/telescope)) in the public dir that you do not want offline.
 - Laravel has its own [plugin for Vite](https://github.com/laravel/vite-plugin) for builds, which adds an extra layer of configuration that vite-pwa does not normally encounter
 
-To make it work, you need to configure vite-plugin-pwa to work around these issues:
+To make it work, you need to configure `vite-plugin-pwa` to work around these issues:
 
 - configure buildBase and outDir in vite.config.ts to make vite-pwa build to the same place as laravel/vite-plugin
 - create a Blade file to act as an HTML entrypoint and add config for this to vite.config.ts
@@ -30,11 +30,11 @@ The accumulated knowledge within it lead to this Laravel, Vite, Vue3 and TypeScr
 
 This repo demonstrates a working PWA with install prompts and offline support within Laravel using Vue3, Vite and Typescript. The useful things are:
 
-- A [vite.config.ts](https://github.com/sfreytag/vite-pwa-docs/blob/main/vite.config.ts) with settings for VitePWA that work with Laravel's directory layout
+- A [vite.config.ts](https://github.com/sfreytag/vite-pwa-docs/blob/main/vite.config.ts) with settings for `vite-plugin-pwa` that work with Laravel's directory layout
 - A [Blade template](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/views/welcome.blade.php) that works as the entrypoint for the PWA
 - A [generator for the PWA icons](https://github.com/sfreytag/laravel-vite-pwa/blob/main/package.json#L7)
 - A [server.php](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php) file that supplies the sw.js and the Service-Worker-Allowed header for `php artisan serve` for local development (see [lines 18:23](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php#L18-L23))
-- A composable [usePwa](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/index.ts) that demonstrates how to access the vite-plugin-pwa functionality within Vue3 and TypeScript (eg install and update hooks, online/offline status)
+- A composable [usePwa](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/index.ts) that demonstrates how to access the `vite-plugin-pwa` functionality within Vue3 and TypeScript (eg install and update hooks, online/offline status)
 - A [PwaStatus component](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/components/PwaStatus.vue) that shows how it all works
 - TypeScript [types for the install event](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/types.ts)
 
@@ -51,7 +51,7 @@ Or just fork the repo and start from there.
 
 ## Build
 
-To build the repo, follow the usual Laravel steps. Nothing extra is required for vite-pwa. Assuming you have PHP, NPM and Composer:
+To build the repo, follow the usual Laravel steps. Nothing extra is required for `vite-plugin-pwa`. Assuming you have PHP, NPM and Composer:
 
 ```
 git clone git@github.com:sfreytag/laravel-vite-pwa.git
@@ -91,13 +91,13 @@ The canonical icon should be an SVG file. This is useful for the PWA anyway, so 
 npm run pwa-icons
 ```
 
-This generates a set of icons defined by the minimal preset described [here](https://vite-pwa-org.netlify.app/assets-generator/cli.html#presets) which matches up pretty well with this [detailed blog post about favicons](https://dev.to/masakudamatsu/favicon-nightmare-how-to-maintain-sanity-3al7).
+This generates a set of icons defined by the minimal preset described [here](https://vite-pwa-org.netlify.app/assets-generator/cli.html#presets).
 
 They are automatically packaged in the public folder so they are web readable. They are also included in this repo so this process only needs repeating if you change the the canonical favicon.svg icon.
 
 ## Screenshot
 
-This screenshot demonstrates the useful features of vite-pwa within Laravel:
+This screenshot demonstrates the useful features of `vite-plugin-pwa` within Laravel:
 
 ![image](https://github.com/sfreytag/laravel-vite-pwa/assets/1155275/f98383dd-93e8-4d6d-abb0-06a6ddd55022)
 

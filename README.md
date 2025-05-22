@@ -26,7 +26,7 @@ https://github.com/vite-pwa/vite-plugin-pwa/issues/431
 
 The accumulated knowledge within it lead to this Laravel, Vite, Vue3 and TypeScript app working as a PWA with offline support and app install prompts. The issue was asking for a demonstration repository so I created this repo to share it. Thoughts, feedback or improvements are welcome.
 
-# What's Here?
+## What's Here?
 
 This repo demonstrates a working PWA with install prompts and offline support within Laravel using Vue3, Vite and Typescript. The useful things are:
 
@@ -38,7 +38,7 @@ This repo demonstrates a working PWA with install prompts and offline support wi
 - A [PwaStatus component](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/components/PwaStatus.vue) that shows how it all works
 - TypeScript [types for the install event](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/js/composables/usePwa/types.ts)
 
-# Setup
+## Setup
 
 This repo has been built on a vanilla install of Laravel 10 using composer from `composer create-project laravel/laravel`.
 

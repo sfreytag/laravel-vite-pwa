@@ -30,7 +30,7 @@ The accumulated knowledge within it lead to this Laravel, Vite, Vue3 and TypeScr
 
 This repo demonstrates a working PWA with install prompts and offline support within Laravel using Vue3, Vite and Typescript. The useful things are:
 
-- A [vite.config.ts](https://github.com/sfreytag/vite-pwa-docs/blob/main/vite.config.ts) with settings for `vite-plugin-pwa` that work with Laravel's directory layout
+- A [vite.config.js](https://github.com/sfreytag/laravel-vite-pwa/blob/main/vite.config.js) with settings for `vite-plugin-pwa` that work with Laravel's directory layout
 - A [Blade template](https://github.com/sfreytag/laravel-vite-pwa/blob/main/resources/views/welcome.blade.php) that works as the entrypoint for the PWA
 - A [generator for the PWA icons](https://github.com/sfreytag/laravel-vite-pwa/blob/main/package.json#L7)
 - A [server.php](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php) file that supplies the sw.js and the Service-Worker-Allowed header for `php artisan serve` for local development (see [lines 18:23](https://github.com/sfreytag/laravel-vite-pwa/blob/main/server.php#L18-L23))
